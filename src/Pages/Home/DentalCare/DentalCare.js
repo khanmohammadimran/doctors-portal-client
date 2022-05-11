@@ -4,8 +4,8 @@ import PrimaryButton from '../../Shared/Navbar/PrimaryButton/PrimaryButton';
 
 const DentalCare = () => {
     return (
-        <div class="hero min-h-screen py-8 mb-8">
-            <div class="hero-content flex-col lg:flex-row justify-around">
+        <div class="hero min-h-screen py-8 mb-8 mx-auto">
+            <div class="hero-content flex-col lg:flex-row justify-around gap-16">
                 <img src={treatment} class=" flex-1 max-w-sm rounded-lg shadow-2xl" />
                 <div className='flex-1' >
                     <h1 class="text-6xl font-bold text-accent">Exceptional Dental Care, on Your Terms</h1>

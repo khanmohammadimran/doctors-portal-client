@@ -14,7 +14,7 @@ const Contact = () => {
                     <input className='w-full py-5 p-3 rounded-lg mb-8' type="text" placeholder='Subject' />
                     <br />
                     <textarea className='w-full py-5 p-3 rounded-lg mb-8' placeholder='Your Message' id="" cols="30" rows="10"></textarea>
-                    <input class="btn btn-primary text-white uppercase font-bold bg-gradient-to-r from-secondary to-primary" type="submit" value="Submit" />
+                    <input className="btn btn-primary text-white uppercase font-bold bg-gradient-to-r from-secondary to-primary" type="submit" value="Submit" />
                 </form>
             </div>
         </section>

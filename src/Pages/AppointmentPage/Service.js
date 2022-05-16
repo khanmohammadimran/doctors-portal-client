@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Service = ({ service }) => {
+const Service = ({ service, setServiceForm }) => {
     const { name, slots } = service;
 
     return (
@@ -18,7 +18,7 @@ const Service = ({ service }) => {
                 </p>
                 <p className='text-center'>{slots.length} {slots.length > 1 ? 'spaces' : 'space'}</p>
                 <div className="card-actions justify-center">
-                    <button disabled={slots.length === 0} className="btn btn-primary text-white uppercase font-bold bg-gradient-to-r from-secondary to-primary">Book Appointment Now</button>
+                    <label onClick={() => setServiceForm(service)} disabled={slots.length === 0} htmlFor="booking-modal" className="btn btn-primary text-white uppercase font-bold bg-gradient-to-r from-secondary to-primary">Book Appointment Now</label>
                 </div>
             </div>
         </div>

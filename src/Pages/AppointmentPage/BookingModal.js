@@ -1,8 +1,11 @@
 import React from 'react';
 import { format } from 'date-fns';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const BookingModal = ({ serviceForm, date, setServiceForm }) => {
     const { _id, name, slots } = serviceForm;
+    const [user, loading, error] = useAuthState(auth);
 
 
     const handleBooking = event => {
@@ -24,12 +27,12 @@ const BookingModal = ({ serviceForm, date, setServiceForm }) => {
                         <input type="text" value={format(date, 'PP')} disabled className="input input-bordered input-accent w-full" />
                         <select name="slot" className="select select-bordered w-full">
                             {
-                                slots.map(slot => <option key={slot._id} value={slot}>{slot}</option>)
+                                slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input type="text" name="name" placeholder="Full Name" className="input input-bordered input-accent w-full" />
+                        <input type="text" name="name" disabled value={user?.displayName || ''} className="input input-bordered input-accent w-full" />
+                        <input type="email" name="email" disabled value={user?.email || ''} className="input input-bordered input-accent w-full" />
                         <input type="number" name="number" placeholder="Phone Number" className="input input-bordered input-accent w-full" />
-                        <input type="email" name="email" placeholder="Email" className="input input-bordered input-accent w-full" />
                         <input type="submit" value="submit" placeholder="Type here" className="btn bg-accent w-full input input-bordered input-accent" />
                     </form>
                 </div>

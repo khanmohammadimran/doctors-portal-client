@@ -2,17 +2,38 @@ import React from 'react';
 import { format } from 'date-fns';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import { Toaster } from 'react-hot-toast';
 
 const BookingModal = ({ serviceForm, date, setServiceForm }) => {
     const { _id, name, slots } = serviceForm;
     const [user, loading, error] = useAuthState(auth);
-
+    const formattedDate = format(date, 'PP');
 
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
-        console.log(_id, name, slot);
-        setServiceForm(null)
+        const booking = {
+            treatmentId: _id,
+            treatment: name,
+            date: formattedDate,
+            slot,
+            patient: user.email,
+            patientName: user.displayName,
+            phone: event.target.phone.value
+        }
+
+        fetch('http://localhost:5000/booking', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setServiceForm(null)
+            })
     }
 
 
@@ -32,7 +53,7 @@ const BookingModal = ({ serviceForm, date, setServiceForm }) => {
                         </select>
                         <input type="text" name="name" disabled value={user?.displayName || ''} className="input input-bordered input-accent w-full" />
                         <input type="email" name="email" disabled value={user?.email || ''} className="input input-bordered input-accent w-full" />
-                        <input type="number" name="number" placeholder="Phone Number" className="input input-bordered input-accent w-full" />
+                        <input type="number" name="phone" placeholder="Phone Number" className="input input-bordered input-accent w-full" />
                         <input type="submit" value="submit" placeholder="Type here" className="btn bg-accent w-full input input-bordered input-accent" />
                     </form>
                 </div>

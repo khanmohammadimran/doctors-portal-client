@@ -2,9 +2,9 @@ import React from 'react';
 import { format } from 'date-fns';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
-const BookingModal = ({ serviceForm, date, setServiceForm }) => {
+const BookingModal = ({ serviceForm, date, setServiceForm, refetch }) => {
     const { _id, name, slots } = serviceForm;
     const [user, loading, error] = useAuthState(auth);
     const formattedDate = format(date, 'PP');
@@ -32,6 +32,13 @@ const BookingModal = ({ serviceForm, date, setServiceForm }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                if (data.success) {
+                    toast.success(`Appointment is set, ${formattedDate} at ${slot}`)
+                }
+                else {
+                    toast.error(`You already have an appointment on, ${data.booking?.date} at ${data.booking?.slot}`)
+                }
+                refetch()
                 setServiceForm(null)
             })
     }
